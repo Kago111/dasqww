@@ -1,0 +1,18 @@
+# Render blueprint. Free plan = web service only, which is why the bot ships
+# with a keep-alive server: Render hands it $PORT and the health check passes.
+# The free plan has no persistent disk, so set BACKUP_CHANNEL_ID as well.
+services:
+  - type: web
+    name: beamng-economy-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -u main.py
+    healthCheckPath: /health
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: GUILD_ID
+        sync: false
+      - key: BACKUP_CHANNEL_ID
+        sync: false
